@@ -81,4 +81,24 @@ Summary tables were created to investigate:
 
 Visualisations will be developed to communicate key findings and trends from the cleaned dataset.
 
-## Project Structure
+## Key Skills Demonstrated
+
+- Data cleaning and preprocessing
+- Exploratory data analysis (EDA)
+- pandas data manipulation
+- Handling large datasets
+- Data quality assessment
+- Data visualisation
+- Communicating insights with data
+- Version control using Git and GitHub
+
+## Future Improvements
+
+- Develop additional visualisations to highlight prescribing trends
+- Perform deeper analysis of regional differences
+- Investigate medicine categories with the highest prescribing costs
+- Build an interactive dashboard using Power BI or Tableau
+
+## Author
+
+**Anwesha Mohanty**
