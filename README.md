@@ -1,104 +1,138 @@
-# NHS Prescribing Insights
+# NHS Prescribing Insights – Data Cleaning
 
-## Overview
+A Python-based data cleaning and preprocessing project using the **NHS Prescription Cost Analysis (PCA)** datasets. This repository demonstrates the end-to-end workflow used to combine, inspect, clean, and validate large monthly prescribing datasets before exploratory analysis and visualisation.
 
-This project explores NHS Prescription Cost Analysis (PCA) data to uncover trends, patterns, and insights from healthcare prescribing records.
+The project forms the data preparation stage of a wider NHS prescribing analysis portfolio project.
 
-The aim of this project is to demonstrate the process of transforming a large, messy public healthcare dataset into a clean and analysis-ready format. The project covers data loading, exploratory data analysis, data cleaning, and visualisation using Python.
+---
 
-The dataset contains over 6.8 million prescription records across multiple NHS regions and includes information about medicines, prescribing quantities, and prescription costs.
+## Project Objective
 
-## Objectives
+To prepare multiple monthly NHS Prescription Cost Analysis datasets for analysis by applying a structured data cleaning workflow, including dataset integration, quality assessment, duplicate removal, missing value analysis, data type validation, and standardisation.
 
-- Explore NHS prescribing data and understand its structure
-- Identify data quality issues such as missing values, incorrect formats, and duplicates
-- Clean and prepare the dataset for analysis
-- Create summary tables to investigate prescribing trends
-- Visualise patterns within NHS prescription activity
-- Communicate insights from healthcare data in a clear and accessible way
+The aim was to produce a clean, reliable dataset suitable for exploratory data analysis and the development of data visualisations.
+
+---
 
 ## Dataset
 
-**Source:** NHS Prescription Cost Analysis (PCA) Data
+**Source:** NHS Business Services Authority (NHSBSA)
 
-The dataset contains monthly prescribing information including:
+The project uses publicly available monthly **Prescription Cost Analysis (PCA)** datasets containing prescribing information for medicines dispensed in England.
 
-- NHS regions and Integrated Care Boards (ICBs)
-- Medicine names and categories
-- Prescription quantities
-- Number of items prescribed
-- Net Ingredient Cost (NIC)
-- Therapeutic classifications
+The datasets include variables such as:
 
-Multiple monthly CSV files were combined into one consolidated dataset for analysis.
+* BNF Code
+* BNF Name
+* Number of Items
+* Quantity
+* Net Ingredient Cost (NIC)
+* Actual Cost
+* Practice Information
 
-## Tools and Technologies
+Multiple monthly CSV files were combined into a single consolidated dataset before the cleaning process began.
 
-- Python 3
-- Visual Studio Code
-- Jupyter Extension for VS Code
-- pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Git & GitHub
+---
 
-## Project Workflow
+## Tools & Skills Used
 
-### 1. Data Loading and Exploration
+| Stage                   | Tools / Techniques                                                                        |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| Development environment | Visual Studio Code (VS Code)                                                              |
+| Programming language    | Python                                                                                    |
+| Data loading            | pandas, pathlib, glob                                                                     |
+| Data cleaning           | Duplicate detection, missing value assessment, data type validation, text standardisation |
+| Data exploration        | pandas descriptive statistics and dataframe inspection                                    |
+| Validation              | Data quality checks and final dataset verification                                        |
 
-- Imported required Python libraries
-- Loaded multiple NHS CSV files
-- Combined datasets into a single dataframe
-- Investigated:
-  - Dataset dimensions
-  - Column information
-  - Data types
-  - Missing values
-  - Duplicate records
-  - Summary statistics
+---
 
-### 2. Data Cleaning
+## Data Cleaning Workflow
 
-The dataset was cleaned by:
+The project followed a structured preprocessing workflow:
 
-- Removing unnecessary administrative and classification columns
-- Handling missing values
-- Removing records with missing medicine classification information
-- Checking and verifying data types
-- Converting the `YEAR_MONTH` column into a datetime format
+### **1. Import Libraries**
 
-Cleaning decisions were documented throughout the analysis to maintain transparency and reproducibility.
+Imported the required Python libraries for data loading, cleaning, and exploration.
 
-### 3. Exploratory Analysis
+### **2. Load and Combine Monthly Datasets**
 
-Summary tables were created to investigate:
+Automatically identified all monthly NHS PCA CSV files and combined them into a single dataframe for processing.
 
-- Prescription activity across NHS regions
-- Medicine categories and prescribing patterns
-- Prescription quantities
-- Prescription costs
+### **3. Initial Data Exploration**
 
-Visualisations will be developed to communicate key findings and trends from the cleaned dataset.
+Performed an initial inspection of the dataset by examining:
 
-## Key Skills Demonstrated
+* Dataset dimensions
+* Column names
+* Data types
+* Missing values
+* Summary statistics
+* Sample records
 
-- Data cleaning and preprocessing
-- Exploratory data analysis (EDA)
-- pandas data manipulation
-- Handling large datasets
-- Data quality assessment
-- Data visualisation
-- Communicating insights with data
-- Version control using Git and GitHub
+### **4. Remove Duplicate Records**
 
-## Future Improvements
+Checked for duplicate observations and removed duplicate rows to ensure each prescription record was unique.
 
-- Develop additional visualisations to highlight prescribing trends
-- Perform deeper analysis of regional differences
-- Investigate medicine categories with the highest prescribing costs
-- Build an interactive dashboard using Power BI or Tableau
+### **5. Assess Missing Values**
 
-## Author
+Identified missing values across all columns and evaluated whether they required removal, retention, or further investigation.
 
-**Anwesha Mohanty**
+### **6. Validate Data Types**
+
+Verified that numerical and categorical columns were stored using appropriate data types to improve accuracy and efficiency.
+
+### **7. Standardise Text Fields**
+
+Cleaned text columns by removing unnecessary whitespace and improving formatting consistency where appropriate.
+
+### **8. Validate Numeric Values**
+
+Reviewed numerical columns for unexpected or invalid values using descriptive statistics and data quality checks.
+
+### **9. Final Data Validation**
+
+Performed a final verification to confirm that:
+
+* Duplicate records had been removed
+* Missing values had been assessed
+* Data types were correct
+* The dataset was ready for analysis
+
+---
+
+## Skills Demonstrated
+
+* Data cleaning and preprocessing
+* Exploratory data inspection
+* Data quality assessment
+* Python programming
+* pandas dataframe manipulation
+* Data validation
+* Dataset integration
+* Reproducible data preparation workflows
+
+---
+
+## Repository Structure
+
+```text
+├── README.md
+├── nhs_prescribing_data_cleaning.ipynb
+├── data/
+│   ├── raw/
+│   └── cleaned/
+└── images/
+```
+
+---
+
+## Future Work
+
+The cleaned dataset will be used for further exploratory analysis, visualisation, and reporting to investigate prescribing patterns, prescribing costs, and trends within NHS prescription data.
+
+---
+
+## About
+
+Built by **Anwesha Mohanty** as part of my independent data analytics portfolio to demonstrate practical data cleaning and preprocessing skills using real-world NHS prescribing data. The project showcases best practices for preparing large public datasets for reliable downstream analysis.
