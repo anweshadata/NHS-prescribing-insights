@@ -1,138 +1,145 @@
-# NHS Prescribing Insights – Data Cleaning
+# **NHS Prescribing Insights – Data Cleaning**
 
-A Python-based data cleaning and preprocessing project using the **NHS Prescription Cost Analysis (PCA)** datasets. This repository demonstrates the end-to-end workflow used to combine, inspect, clean, and validate large monthly prescribing datasets before exploratory analysis and visualisation.
-
-The project forms the data preparation stage of a wider NHS prescribing analysis portfolio project.
+A Python-based data cleaning and preprocessing project using the **NHS Prescription Cost Analysis (PCA)** datasets. This repository demonstrates the preparation of **large-scale healthcare prescribing data** through dataset integration, quality assessment, cleaning, validation, and export of an **analysis-ready dataset**.
 
 ---
 
-## Project Objective
+## **Project Objective**
 
-To prepare multiple monthly NHS Prescription Cost Analysis datasets for analysis by applying a structured data cleaning workflow, including dataset integration, quality assessment, duplicate removal, missing value analysis, data type validation, and standardisation.
+To clean and prepare multiple monthly **NHS Prescription Cost Analysis (PCA)** datasets by applying a structured **ETL workflow**.
 
-The aim was to produce a clean, reliable dataset suitable for exploratory data analysis and the development of data visualisations.
+The project aimed to:
+
+- **Combine** monthly prescription datasets into a single dataframe
+- **Identify and resolve** data quality issues
+- **Remove unnecessary variables**
+- **Handle missing values**
+- **Remove duplicate records**
+- **Convert data types**
+- Produce a **reliable dataset** for analysing NHS prescribing costs and medicine demand
 
 ---
 
-## Dataset
+## **Dataset**
 
 **Source:** NHS Business Services Authority (NHSBSA)
 
-The project uses publicly available monthly **Prescription Cost Analysis (PCA)** datasets containing prescribing information for medicines dispensed in England.
+The project uses publicly available **Prescription Cost Analysis (PCA)** datasets containing prescribing information for medicines dispensed in England.
 
-The datasets include variables such as:
+The raw datasets include:
 
-* BNF Code
-* BNF Name
-* Number of Items
-* Quantity
-* Net Ingredient Cost (NIC)
-* Actual Cost
-* Practice Information
-
-Multiple monthly CSV files were combined into a single consolidated dataset before the cleaning process began.
+- **Medicine names and classifications**
+- **Prescription items**
+- **Quantity prescribed**
+- **Net Ingredient Cost (NIC)**
+- **Regional information**
+- **Prescriber and dispenser details**
 
 ---
 
-## Tools & Skills Used
+## **Tools & Skills Used**
 
-| Stage                   | Tools / Techniques                                                                        |
-| ----------------------- | ----------------------------------------------------------------------------------------- |
-| Development environment | Visual Studio Code (VS Code)                                                              |
-| Programming language    | Python                                                                                    |
-| Data loading            | pandas, pathlib, glob                                                                     |
-| Data cleaning           | Duplicate detection, missing value assessment, data type validation, text standardisation |
-| Data exploration        | pandas descriptive statistics and dataframe inspection                                    |
-| Validation              | Data quality checks and final dataset verification                                        |
-
----
-
-## Data Cleaning Workflow
-
-The project followed a structured preprocessing workflow:
-
-### **1. Import Libraries**
-
-Imported the required Python libraries for data loading, cleaning, and exploration.
-
-### **2. Load and Combine Monthly Datasets**
-
-Automatically identified all monthly NHS PCA CSV files and combined them into a single dataframe for processing.
-
-### **3. Initial Data Exploration**
-
-Performed an initial inspection of the dataset by examining:
-
-* Dataset dimensions
-* Column names
-* Data types
-* Missing values
-* Summary statistics
-* Sample records
-
-### **4. Remove Duplicate Records**
-
-Checked for duplicate observations and removed duplicate rows to ensure each prescription record was unique.
-
-### **5. Assess Missing Values**
-
-Identified missing values across all columns and evaluated whether they required removal, retention, or further investigation.
-
-### **6. Validate Data Types**
-
-Verified that numerical and categorical columns were stored using appropriate data types to improve accuracy and efficiency.
-
-### **7. Standardise Text Fields**
-
-Cleaned text columns by removing unnecessary whitespace and improving formatting consistency where appropriate.
-
-### **8. Validate Numeric Values**
-
-Reviewed numerical columns for unexpected or invalid values using descriptive statistics and data quality checks.
-
-### **9. Final Data Validation**
-
-Performed a final verification to confirm that:
-
-* Duplicate records had been removed
-* Missing values had been assessed
-* Data types were correct
-* The dataset was ready for analysis
+| **Stage** | **Tools / Techniques** |
+|---|---|
+| **Development environment** | Visual Studio Code (VS Code) |
+| **Programming language** | Python |
+| **Data loading** | pandas, glob, os |
+| **Data cleaning** | Missing value handling, duplicate removal, column filtering |
+| **Data validation** | Dataset inspection, summary statistics, quality checks |
+| **Data transformation** | Datetime conversion, dataframe manipulation |
+| **Exploratory analysis** | pandas aggregation, groupby, summary tables |
+| **Data export** | Cleaned CSV outputs |
 
 ---
 
-## Skills Demonstrated
+## **Data Cleaning Workflow**
 
-* Data cleaning and preprocessing
-* Exploratory data inspection
-* Data quality assessment
-* Python programming
-* pandas dataframe manipulation
-* Data validation
-* Dataset integration
-* Reproducible data preparation workflows
+The project followed a structured **data preprocessing workflow**:
+
+### **1. Import Libraries and Load Monthly Datasets**
+
+The required Python libraries were imported for **data manipulation, numerical operations, visualisation, and file management**.
+
+All monthly **NHS PCA CSV files** were automatically located using `glob`, loaded into pandas dataframes, and combined into one consolidated dataset.
 
 ---
 
-## Repository Structure
+### **2. Initial Dataset Inspection**
+
+The combined dataset was inspected to understand its structure and identify potential **data quality issues**.
+
+Checks performed included:
+
+- **Dataset dimensions**
+- **Column names**
+- **Data types**
+- **Missing values**
+- **Duplicate records**
+- **Descriptive statistics**
+
+---
+
+### **3. Remove Unnecessary Variables**
+
+Administrative and classification variables outside the project scope were removed.
+
+Removed columns included:
+
+- **Code identifiers**
+- **Classification codes**
+- **SNOMED identifiers**
+- **Supplier information**
+- **Pharmacy service fields**
+
+This reduced dataset complexity while retaining variables required for **prescription cost and frequency analysis**.
+
+---
+
+### **4. Handle Missing Values**
+
+Missing values were assessed across the cleaned dataset.
+
+The **`GENERIC_BNF_EQUIVALENT_NAME`** column contained **2 missing records**. Since these records could not be reliably categorised, they were removed.
+
+---
+
+### **5. Convert Data Types**
+
+The **`YEAR_MONTH`** field was converted from **YYYYMM integer format** (for example, `202505`) into **datetime format**.
+
+This enabled:
+
+- **Monthly trend analysis**
+- **Time-based grouping**
+- **Visualisation**
+
+---
+
+### **6. Remove Duplicate Records**
+
+Duplicate records were identified using pandas' **`duplicated()`** function.
+
+A total of **143,869 exact duplicate rows** were detected and removed using **`drop_duplicates()`**.
+
+This prevented repeated prescription records from influencing analysis results.
+
+---
+
+### **7. Final Dataset Validation**
+
+The cleaned dataset was checked to confirm:
+
+- **No remaining missing values**
+- **No duplicate rows**
+- **Correct data types**
+- **Required analytical variables retained**
+
+Final cleaned dataset:
+
+- **6,732,174 rows**
+- **14 columns**
+
+The cleaned dataset was exported as:
 
 ```text
-├── README.md
-├── nhs_prescribing_data_cleaning.ipynb
-├── data/
-│   ├── raw/
-│   └── cleaned/
-└── images/
-```
-
----
-
-## Future Work
-
-The cleaned dataset will be used for further exploratory analysis, visualisation, and reporting to investigate prescribing patterns, prescribing costs, and trends within NHS prescription data.
-
----
-
-## About
-
-Built by **Anwesha Mohanty** as part of my independent data analytics portfolio to demonstrate practical data cleaning and preprocessing skills using real-world NHS prescribing data. The project showcases best practices for preparing large public datasets for reliable downstream analysis.
+cleaned_nhs_prescription_data.csv
