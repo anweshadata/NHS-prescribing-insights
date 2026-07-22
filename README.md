@@ -38,7 +38,7 @@ The raw datasets include:
 - Regional information
 - Prescriber and dispenser details
 
-Data is publicly available from the [NHSBSA Open Data Portal](https://opendata.nhsbsa.net/dataset/prescription-cost-analysis-pca-monthly-data), covering January 2021 onwards, published with a roughly two-month lag. Data is not included in this repo due to file size, see "How to Reproduce" below.
+Data is publicly available from the [NHSBSA Open Data Portal](https://opendata.nhsbsa.net/dataset/prescription-cost-analysis-pca-monthly-data), covering January 2021 onwards, published with a roughly two-month lag. The raw monthly CSVs and the full cleaned dataset are not included in this repo due to file size, see "How to Reproduce" below. The three summary tables produced during analysis (`top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv`) are small and are included in `Data/` so the results can be viewed without re-running the notebook.
 
 ---
 
@@ -89,8 +89,8 @@ Findings were interpreted across volume, cost, and region, with the analysis sho
 1. Clone the repo. Run: git clone https://github.com/anweshadata/NHS-prescribing-insights.git then cd NHS-prescribing-insights
 2. Install dependencies. Run: pip install -r requirements.txt
 3. Download the monthly NHS Prescription Cost Analysis (PCA) CSVs from the [NHSBSA Open Data Portal](https://opendata.nhsbsa.net/dataset/prescription-cost-analysis-pca-monthly-data). Data is available from January 2021 onwards, published roughly two months in arrears.
-4. Place the downloaded CSV files in a folder named `data/` at the repo root (sibling to the `Notebook/` folder). Data is not included in this repo due to file size.
-5. Open `Notebook/nhs_prescription_analysis.ipynb` in Jupyter or VS Code and run all cells in order. Cleaned outputs (`cleaned_nhs_prescription_data.csv`, `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv`) will be saved back into `data/`.
+4. Place the downloaded CSV files in a folder named `Data/` at the repo root (sibling to the `Notebook/` folder). The raw monthly CSVs and full cleaned dataset are not included in this repo due to file size.
+5. Open `Notebook/nhs_prescription_analysis.ipynb` in Jupyter or VS Code and run all cells in order. Cleaned outputs (`cleaned_nhs_prescription_data.csv`, `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv`) will be saved back into `Data/`, overwriting the summary tables already included in the repo with freshly generated ones.
 
 ---
 
