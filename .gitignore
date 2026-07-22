@@ -216,4 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-Data/
+
+# Raw and cleaned NHS prescribing data is too large for GitHub and is
+# reproducible via the "How to Reproduce" steps in the README, so the
+# whole Data/ folder is ignored except the small summary tables, which
+# are kept so the results are visible directly in the repo.
+Data/*
+!Data/regional_spending.csv
+!Data/top_prescribed_medicines.csv
+!Data/top_spending_medicines.csv
