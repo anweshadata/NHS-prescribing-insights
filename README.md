@@ -51,6 +51,9 @@ Data is publicly available from the NHSBSA Open Data Portal from January 2021 on
 | Exploratory analysis | pandas aggregation, groupby, summary tables |
 | Data visualisation | matplotlib, custom chart formatting |
 | Data export | Cleaned CSV outputs |
+| Database | SQLite, indexed tables |
+| SQL | SELECT, WHERE, GROUP BY, HAVING, aggregates, JOIN, subqueries |
+| Reproducibility | venv, `requirements.txt`, standalone pipeline script |
 
 ## Workflow
 
@@ -78,25 +81,61 @@ The cleaned dataset was explored to answer one central research question, split 
 
 Three charts were built to make the findings easier to interpret: a horizontal bar chart of the top 10 medicines by NHS spending, a bar chart comparing total spending by region, and a lollipop chart of the top 10 most prescribed medicines by volume.
 
-### 6. Insights & Conclusion
+### 6. Database & SQL Analysis
+
+The cleaned dataset was loaded into a SQLite database (`Data/nhs_prescriptions.db`), with indexes added on `REGION_NAME`, `BNF_PRESENTATION_NAME`, and `YEAR_MONTH` for faster querying. `SQL/practice_queries.sql` covers core query patterns (`SELECT`, `WHERE`, `ORDER BY`, `GROUP BY`, `HAVING`, aggregates, `LIKE`). `SQL/region_population_lookup.sql` adds a second `region_population` lookup table (population estimates from ONS/Census 2021, mixed vintages 2019-2024) and uses a `JOIN` plus a subquery to calculate NHS spending per capita by region, and to identify which regions spend above the national per-capita average.
+
+### 7. Insights & Conclusion
 
 **Volume: cheap, everyday medicines dominate.** The medicines prescribed most often are all inexpensive, everyday treatments for common, long-term conditions. Atorvastatin 20mg (a cholesterol-lowering statin) tops the list with just over 40 million items dispensed, followed by Omeprazole (31.5 million, for acid reflux) and Amlodipine (24.1 million, for blood pressure).
 
 **Cost: a very different story, led by Mounjaro.** The FreeStyle Libre 2 Plus Sensor, a glucose monitoring device, is the single highest-cost item at £311.8 million. Mounjaro is more striking still: three of its individual dose strengths each rank separately within the top 10 highest-cost medicines, together accounting for roughly £491.2 million. Once every dose strength and pack size is combined into one figure, Mounjaro's true total rises to £627.0 million — meaning the top-10 table alone understates its real cost impact by around £136 million, making it the single highest-spending medicine overall once treated as one drug rather than several separate line items. Despite this, Mounjaro doesn't appear anywhere in the top 10 by prescription volume.
 
-**Region: spending is uneven across England.** The Midlands (£2,430.7 million) and North East and Yorkshire (£2,071.7 million) had the highest total spend. The South West was lowest at £1,046.3 million, with London second-lowest at £1,338.5 million.
+**Region: spending is uneven across England — and raw totals are misleading.** By raw total, the Midlands (£2,430.7 million) and North East and Yorkshire (£2,071.7 million) had the highest spend, with the South West lowest at £1,046.3 million and London second-lowest at £1,338.5 million. But raw totals mostly track population size. Adjusting for population (spend per capita, via the `region_population` lookup table and JOIN in `SQL/region_population_lookup.sql`) flips this: North East and Yorkshire has the highest per-capita spend (£254.18), followed by the Midlands (£235.29), while London — despite having the second-highest *raw* total — has the *lowest* per-capita spend (£147.26) of any region. Four regions (North East and Yorkshire, Midlands, East of England, North West) spend above the national per-capita average.
 
-**Limitations.** Costs are based on Net Ingredient Cost (NIC) — the list price before discounts or dispensing fees — so actual NHS spending may differ. Regional figures aren't adjusted for population size, so they reflect total spend rather than spend per patient. Different dose strengths of the same medicine are counted separately by default in a groupby on exact presentation name, which is why a dedicated calculation was needed to reveal Mounjaro's true combined cost.
+**Limitations.** Costs are based on Net Ingredient Cost (NIC) — the list price before discounts or dispensing fees — so actual NHS spending may differ. The per-capita regional figures use population estimates from mixed vintages (2019-2024, sourced via Wikipedia infoboxes citing ONS/Census 2021) rather than a single consistent-year ONS extract, since a matching single-year regional breakdown was only available as an `.xlsx` file that couldn't be downloaded/parsed in the environment used to build this — a more rigorous version would pull a single mid-year estimate directly from the [ONS CCG/ICB population dataset](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/clinicalcommissioninggroupmidyearpopulationestimates). Different dose strengths of the same medicine are counted separately by default in a groupby on exact presentation name, which is why a dedicated calculation was needed to reveal Mounjaro's true combined cost.
 
 **Conclusion.** NHS prescription spending appears shaped less by what gets prescribed most often, and more by the rising cost of newer, specialised treatments — with real implications for future NHS budgeting as demand for these kinds of drugs continues to grow.
 
-## How to Reproduce
+## Folder Structure
+
+```
+nhs-prescription-analysis/
+├── Data/                              # not tracked in git except the 3 summary CSVs below (see Setup)
+│   ├── pca_YYYYMM.csv                 # 12 monthly raw files (downloaded, not included)
+│   ├── cleaned_nhs_prescription_data.csv  # generated
+│   ├── nhs_prescriptions.db           # generated SQLite database
+│   ├── top_spending_medicines.csv     # included — small, viewable without re-running anything
+│   ├── regional_spending.csv          # included
+│   └── top_prescribed_medicines.csv   # included
+├── Notebook/
+│   ├── nhs_prescription_analysis.ipynb
+│   └── data_pipeline.py               # reusable load/clean/load-to-sqlite functions
+├── SQL/
+│   ├── practice_queries.sql
+│   └── region_population_lookup.sql
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+## Setup
 
 1. Clone the repo. Run: `git clone https://github.com/anweshadata/NHS-prescribing-insights.git` then `cd NHS-prescribing-insights`
-2. Install dependencies. Run: `pip install -r requirements.txt`
-3. Download the monthly NHS Prescription Cost Analysis (PCA) CSVs for **May 2025 through April 2026** from the [NHSBSA Open Data Portal](https://opendata.nhsbsa.net/dataset/prescription-cost-analysis-pca-monthly-data). Each month is published as a separate resource file; you'll need to select and download each of the 12 months individually.
-4. Place the downloaded CSV files in a folder named `Data/` at the repo root (sibling to the `Notebook/` folder). The raw monthly CSVs and full cleaned dataset are not included in this repo due to file size.
-5. Open `Notebook/nhs_prescription_analysis.ipynb` in Jupyter or VS Code and run all cells in order. Cleaned outputs (`cleaned_nhs_prescription_data.csv`, `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv`) will be saved back into `Data/`, overwriting the summary tables already included in the repo with freshly generated ones.
+2. Create and activate a virtual environment:
+   - Windows: `python -m venv venv` then `venv\Scripts\activate`
+   - macOS/Linux: `python -m venv venv` then `source venv/bin/activate`
+3. Install dependencies. Run: `pip install -r requirements.txt`
+
+## How to Run
+
+1. Download the monthly NHS Prescription Cost Analysis (PCA) CSVs for **May 2025 through April 2026** from the [NHSBSA Open Data Portal](https://opendata.nhsbsa.net/dataset/prescription-cost-analysis-pca-monthly-data). Each month is published as a separate resource file; you'll need to select and download each of the 12 months individually.
+2. Place the downloaded CSV files in a folder named `Data/` at the repo root (sibling to the `Notebook/` folder) — you'll need to create this folder yourself, since it isn't tracked in git (see `.gitignore`). The raw monthly CSVs and full cleaned dataset are not included in this repo due to file size.
+3. Either:
+   - Open `Notebook/nhs_prescription_analysis.ipynb` in Jupyter or VS Code and run all cells in order, **or**
+   - Run the pipeline directly from the `Notebook/` folder: `cd Notebook` then `python data_pipeline.py`, which loads, cleans, and writes the cleaned data into an indexed `nhs_prescriptions.db` (this covers steps 1-3 of the workflow below; the EDA, visualisation, and insights steps still need to be run from the notebook).
+4. Either route saves outputs back into `Data/`: `cleaned_nhs_prescription_data.csv`, `nhs_prescriptions.db`, and (notebook only) `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv` — overwriting the summary tables already included in the repo with freshly generated ones.
+5. To run the SQL analysis, open `Data/nhs_prescriptions.db` in any SQLite client (e.g. [DB Browser for SQLite](https://sqlitebrowser.org/), or the SQLite extension in VS Code) and run the queries in `SQL/practice_queries.sql` and `SQL/region_population_lookup.sql`.
 
 ## About
 
