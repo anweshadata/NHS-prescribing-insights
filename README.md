@@ -133,7 +133,7 @@ nhs-prescription-analysis/
 2. Place the downloaded CSV files in a folder named `Data/` at the repo root (sibling to the `Notebook/` folder) — you'll need to create this folder yourself, since it isn't tracked in git (see `.gitignore`). The raw monthly CSVs and full cleaned dataset are not included in this repo due to file size.
 3. Either:
    - Open `Notebook/nhs_prescription_analysis.ipynb` in Jupyter or VS Code and run all cells in order, **or**
-   - Run the pipeline directly from the `Notebook/` folder: `cd Notebook` then `python data_pipeline.py`, which loads, cleans, and writes the cleaned data into an indexed `nhs_prescriptions.db` (this covers steps 1-3 of the workflow below; the EDA, visualisation, and insights steps still need to be run from the notebook).
+   - Run the pipeline directly from the `Notebook/` folder: `cd Notebook` then `python data_pipeline.py`, which loads, cleans, and writes the cleaned data into an indexed `nhs_prescriptions.db` (this covers steps 1-3 of the workflow above; the EDA, visualisation, and insights steps still need to be run from the notebook).
 4. Either route saves outputs back into `Data/`: `cleaned_nhs_prescription_data.csv`, `nhs_prescriptions.db`, and (notebook only) `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv` — overwriting the summary tables already included in the repo with freshly generated ones.
 5. To run the SQL analysis, open `Data/nhs_prescriptions.db` in any SQLite client (e.g. [DB Browser for SQLite](https://sqlitebrowser.org/), or the SQLite extension in VS Code) and run the queries in `SQL/practice_queries.sql` and `SQL/region_population_lookup.sql`.
 
