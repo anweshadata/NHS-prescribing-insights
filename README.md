@@ -137,6 +137,10 @@ nhs-prescription-analysis/
 4. Either route saves outputs back into `Data/`: `cleaned_nhs_prescription_data.csv`, `nhs_prescriptions.db`, and (notebook only) `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv` — overwriting the summary tables already included in the repo with freshly generated ones.
 5. To run the SQL analysis, open `Data/nhs_prescriptions.db` in any SQLite client (e.g. [DB Browser for SQLite](https://sqlitebrowser.org/), or the SQLite extension in VS Code) and run the queries in `SQL/practice_queries.sql` and `SQL/region_population_lookup.sql`.
 
+## Reflections
+
+**SQL vs pandas — which did I prefer?** Honestly, both, for different reasons. Pandas felt like the right tool for the messy, step-by-step cleaning work — combining 12 monthly CSVs, dropping columns, fixing types, deduplicating 143,869 rows — where I needed to see and shape the data incrementally as I went. SQL felt more natural once the data was already clean and the task became "answer this specific question" — especially the region per-capita analysis, where a JOIN plus a subquery expressed "spend per capita by region, then filter to above-average regions" more compactly than the equivalent pandas would have. If anything, working through both on the same dataset made the distinction clearer: pandas for irregular, exploratory cleaning; SQL for well-defined aggregation and lookup questions against data that's already in good shape.
+
 ## About
 
 Exploratory data analysis of NHS prescribing data (May 2025-April 2026) to uncover trends, patterns, and insights using Python. This project includes data cleaning, analysis, visualisation, and interpretation techniques to transform healthcare prescribing data into meaningful, evidence-based insights.
