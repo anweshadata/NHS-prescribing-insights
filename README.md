@@ -56,7 +56,7 @@ Data is publicly available from the NHSBSA Open Data Portal from January 2021 on
 | Database | SQLite, indexed tables |
 | SQL | SELECT, WHERE, GROUP BY, HAVING, aggregates, JOIN, subqueries |
 | Business intelligence | Power BI Desktop, multi-page report design, DAX (measures, calculated columns, RANKX, CALCULATE, filter context) |
-| Reproducibility | venv, `requirements.txt`, standalone pipeline script |
+| Reproducibility | venv, `requirements.txt`, standalone pipeline script, Git LFS |
 
 ## Workflow
 
