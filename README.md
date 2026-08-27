@@ -1,6 +1,6 @@
 # NHS Prescribing Insights
 
-A Python-based data analysis project using the NHS Prescription Cost Analysis (PCA) datasets. This repository demonstrates the full workflow of preparing and analysing large-scale healthcare prescribing data, from dataset integration and cleaning through to exploratory analysis, visualisation, and insight generation.
+An end-to-end data analysis project using the NHS Prescription Cost Analysis (PCA) datasets, built three ways: Python/pandas for cleaning and exploratory analysis, SQL/SQLite for reproducible querying, and a Power BI dashboard for interactive reporting. This repository demonstrates the full workflow of preparing and analysing large-scale healthcare prescribing data, from dataset integration and cleaning through to exploratory analysis, visualisation, and insight generation.
 
 **Analysis period covered: May 2025 - April 2026 (12 months)**
 
@@ -154,7 +154,7 @@ nhs-prescription-analysis/
 
 ## About
 
-Exploratory data analysis of NHS prescribing data (May 2025-April 2026) to uncover trends, patterns, and insights using Python. This project includes data cleaning, analysis, visualisation, and interpretation techniques to transform healthcare prescribing data into meaningful, evidence-based insights.
+Exploratory data analysis of NHS prescribing data (May 2025-April 2026) to uncover trends, patterns, and insights, using Python, SQL, and Power BI. This project includes data cleaning, analysis, visualisation, and interpretation techniques to transform healthcare prescribing data into meaningful, evidence-based insights.
 
 ## Author
 
