@@ -129,7 +129,7 @@ nhs-prescription-analysis/
 
 ## Setup
 
-1. Clone the repo. Run: `git clone https://github.com/anweshadata/NHS-prescribing-insights.git` then `cd NHS-prescribing-insights`
+1. Install [Git LFS](https://git-lfs.github.com) if you don't have it, then clone the repo: `git lfs install` (one-time, per machine) followed by `git clone https://github.com/anweshadata/NHS-prescribing-insights.git` then `cd NHS-prescribing-insights`. Git LFS is required to properly download `Power BI/NHS_Prescribing_Insights_Dashboard.pbix` — without it you'll get a small pointer file instead of the actual `.pbix`.
 2. Create and activate a virtual environment:
    - Windows: `python -m venv venv` then `venv\Scripts\activate`
    - macOS/Linux: `python -m venv venv` then `source venv/bin/activate`
