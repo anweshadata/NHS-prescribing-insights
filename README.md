@@ -20,6 +20,8 @@ The project aimed to:
 - Explore and summarise the cleaned dataset to answer three research questions on cost, geography, and volume
 - Visualise key findings with charts
 - Interpret results into clear, evidence-based insights
+- Rebuild the analysis with SQL for reproducible, well-defined querying
+- Deliver the findings as an interactive Power BI dashboard for non-technical stakeholders
 
 ## Dataset
 
