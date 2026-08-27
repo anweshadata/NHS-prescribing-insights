@@ -53,6 +53,7 @@ Data is publicly available from the NHSBSA Open Data Portal from January 2021 on
 | Data export | Cleaned CSV outputs |
 | Database | SQLite, indexed tables |
 | SQL | SELECT, WHERE, GROUP BY, HAVING, aggregates, JOIN, subqueries |
+| Business intelligence | Power BI Desktop, multi-page report design, DAX (measures, calculated columns, RANKX, CALCULATE, filter context) |
 | Reproducibility | venv, `requirements.txt`, standalone pipeline script |
 
 ## Workflow
@@ -97,6 +98,10 @@ The cleaned dataset was loaded into a SQLite database (`Data/nhs_prescriptions.d
 
 **Conclusion.** NHS prescription spending appears shaped less by what gets prescribed most often, and more by the rising cost of newer, specialised treatments — with real implications for future NHS budgeting as demand for these kinds of drugs continues to grow.
 
+### 8. Power BI Dashboard
+
+To make the findings usable by a non-technical stakeholder rather than requiring them to read a notebook or run SQL queries, the same cleaned dataset was rebuilt as a 5-page interactive Power BI report (`Power BI/NHS_Prescribing_Insights_Dashboard.pbix`): **Overview** (KPI summary, cost trend, a region filter synced across all 5 pages), **Cost** (top medicines by spend, and Mounjaro's true combined cost once all dose strengths are unified), **Volume** (top medicines by items prescribed, items trend over time), **Cost vs Volume** (where high-spend and high-volume medicines diverge — zero overlap between the two Top 10 lists), and **Regional** (spend by region, both raw totals and per capita). See [`Power BI/NOTES.md`](./Power%20BI/NOTES.md) for detailed build notes and troubleshooting, including a DAX filter-context bug, a deprecated map visual, and other fixes made along the way.
+
 ## Folder Structure
 
 ```
@@ -114,6 +119,9 @@ nhs-prescription-analysis/
 ├── SQL/
 │   ├── practice_queries.sql
 │   └── region_population_lookup.sql
+├── Power BI/
+│   ├── NHS_Prescribing_Insights_Dashboard.pbix
+│   └── NOTES.md                       # build notes & troubleshooting
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -140,6 +148,8 @@ nhs-prescription-analysis/
 ## Reflections
 
 **SQL vs pandas — which did I prefer?** Honestly, both, for different reasons. Pandas felt like the right tool for the messy, step-by-step cleaning work — combining 12 monthly CSVs, dropping columns, fixing types, deduplicating 143,869 rows — where I needed to see and shape the data incrementally as I went. SQL felt more natural once the data was already clean and the task became "answer this specific question" — especially the region per-capita analysis, where a JOIN plus a subquery expressed "spend per capita by region, then filter to above-average regions" more compactly than the equivalent pandas would have. If anything, working through both on the same dataset made the distinction clearer: pandas for irregular, exploratory cleaning; SQL for well-defined aggregation and lookup questions against data that's already in good shape.
+
+**Power BI — what did building it a third way add?** The regional and Mounjaro findings didn't change between the pandas, SQL, and Power BI versions, but getting them into a report someone else could filter themselves surfaced new problems: DAX's filter context caught me out more than once, where a measure that looked correct in isolation gave a silently wrong answer once a relationship or a slicer was involved, in a way that neither pandas nor SQL had exposed. I also decided against building fully dynamic text callouts, since this version's deliverable is static screenshots of the unfiltered report rather than a live shared file — a trade-off documented in `Power BI/NOTES.md` rather than solved. Overall this felt like the project that was most about anticipating how someone else would actually use the output, not just getting the right answer.
 
 ## About
 
