@@ -144,6 +144,7 @@ nhs-prescription-analysis/
    - Run the pipeline directly from the `Notebook/` folder: `cd Notebook` then `python data_pipeline.py`, which loads, cleans, and writes the cleaned data into an indexed `nhs_prescriptions.db` (this covers steps 1-3 of the workflow above; the EDA, visualisation, and insights steps still need to be run from the notebook).
 4. Either route saves outputs back into `Data/`: `cleaned_nhs_prescription_data.csv`, `nhs_prescriptions.db`, and (notebook only) `top_spending_medicines.csv`, `regional_spending.csv`, `top_prescribed_medicines.csv` — overwriting the summary tables already included in the repo with freshly generated ones.
 5. To run the SQL analysis, open `Data/nhs_prescriptions.db` in any SQLite client (e.g. [DB Browser for SQLite](https://sqlitebrowser.org/), or the SQLite extension in VS Code) and run the queries in `SQL/practice_queries.sql` and `SQL/region_population_lookup.sql`.
+6. To view the Power BI dashboard, open `Power BI/NHS_Prescribing_Insights_Dashboard.pbix` in [Power BI Desktop](https://www.microsoft.com/en-us/power-platform/products/power-bi/downloads) (free, Windows only). The report's data sources point to `cleaned_nhs_prescription_data.csv` and `region_population.csv`, generated in steps 3-4 above, so if those files aren't at their original local paths, refresh will fail until the source paths are updated (**Transform Data > Data source settings** in Power BI Desktop). See `Power BI/NOTES.md` for background on how the report was built.
 
 ## Reflections
 
