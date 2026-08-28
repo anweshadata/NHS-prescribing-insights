@@ -104,6 +104,20 @@ The cleaned dataset was loaded into a SQLite database (`Data/nhs_prescriptions.d
 
 To make the findings usable by a non-technical stakeholder rather than requiring them to read a notebook or run SQL queries, the same cleaned dataset was rebuilt as a 5-page interactive Power BI report (`Power BI/NHS_Prescribing_Insights_Dashboard.pbix`): **Overview** (KPI summary, cost trend, a region filter synced across all 5 pages), **Cost** (top medicines by spend, and Mounjaro's true combined cost once all dose strengths are unified), **Volume** (top medicines by items prescribed, items trend over time), **Cost vs Volume** (where high-spend and high-volume medicines diverge — zero overlap between the two Top 10 lists), and **Regional** (spend by region, both raw totals and per capita). See [`Power BI/NOTES.md`](./Power%20BI/NOTES.md) for detailed build notes and troubleshooting, including a DAX filter-context bug, a deprecated map visual, and other fixes made along the way. The dashboard's findings match those in Insights & Conclusion above — the same underlying dataset and calculations, presented as an explorable report rather than static charts.
 
+**Screenshots:**
+
+| Overview | Cost |
+|---|---|
+| ![Overview page](./Power%20BI/01-overview.png) | ![Cost page](./Power%20BI/02-cost.png) |
+
+| Volume | Cost vs Volume |
+|---|---|
+| ![Volume page](./Power%20BI/03-volume.png) | ![Cost vs Volume page](./Power%20BI/04-cost-vs-volume.png) |
+
+| Regional |
+|---|
+| ![Regional page](./Power%20BI/05-regional.png) |
+
 ## Folder Structure
 
 ```
@@ -123,7 +137,12 @@ nhs-prescription-analysis/
 │   └── region_population_lookup.sql
 ├── Power BI/
 │   ├── NHS_Prescribing_Insights_Dashboard.pbix
-│   └── NOTES.md                       # build notes & troubleshooting
+│   ├── NOTES.md                       # build notes & troubleshooting
+│   ├── 01-overview.png                # exported screenshots of each report page
+│   ├── 02-cost.png
+│   ├── 03-volume.png
+│   ├── 04-cost-vs-volume.png
+│   └── 05-regional.png
 ├── requirements.txt
 ├── .gitignore
 └── README.md
